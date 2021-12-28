@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小球移动</title>
+    <style>
+        #field {
+            position: relative;
+            height: 400px;
+            background-color: #D75740;
+        }
+
+        #ball {
+            position: absolute;
+            left: 0;
+            bottom: 50%;
+            width: 4em;
+            height: 1em;
+            border-radius: 0.5em;
+        }
+
+        #ball2 {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 4em;
+            height: 1em;
+            border-radius: 0.5em;
+        }
+
+        .img1 {
+            width: 6em;
+            height: 5em;
+        }
+
+        .img2 {
+            width: 5em;
+            height: 5em;
+        }
+
+
+        /* #ball {
+            background-color: red;
+        } */
+
+        #ball2 {
+            /* background-color: blue; */
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var field = document.getElementById('field');
+            var ball = field.childNodes[1];
+            var ball2 = field.childNodes[3];
+            var maxX = field.clientWidth - ball.offsetWidth;
+            var maxY = field.clientHeight - ball.offsetHeight;
+            var duration = 50;//设置需要的时间;
+            var gridSize = 50;//设置像素点;
+            var start = null;
+
+            function step(tiemstamp) {
+                var progress, x, y, y2;
+                if (start === null) {
+                    start = tiemstamp;
+                }
+                progress = (tiemstamp - start) / duration / 1000;
+                x = progress * maxX / gridSize;
+                y = 2 * Math.sin(x);
+                y2 = 2 * Math.cos(x);
+                ball.style.left = ball2.style.left = Math.min(maxX, gridSize * x) + "px";
+                ball.style.bottom = maxY / 2 + (gridSize * y) + "px";
+                ball2.style.bottom = maxY / 2 + (gridSize * y2) + "px";
+                if (progress >= 1) {
+                    start = null;
+                }
+                requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div id="field">
+        <div id="ball">
+            <img src="./2.gif" class="img1">
+        </div>
+        <div id="ball2">
+            <!-- <img src="./1.gif" class="img1"> -->
+        </div>
+    </div>
+
+</body>
+
+</html>

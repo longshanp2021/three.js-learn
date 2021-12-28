@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+            position: absolute;
+            left: 0;
+            top: 50px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input type="button" value="前进" id="box_start">
+    <input type="button" value="停止" id="box_stop">
+    <input type="button" value="回退" id="box_back">
+    <br><br>
+    <div id="box" class="box">
+
+    </div>
+    <script>
+        let boxStart = document.getElementById("box_start");
+        let boxBack = document.getElementById("box_back");
+        let timeId_1;
+        let timeId_2;
+
+        boxStart.onclick = function () {
+            let box = document.getElementById("box");
+            clearInterval(timeId_2);
+            timeId_1 = setInterval(function () {
+                if (box.offsetLeft >= 1500) {
+                    clearInterval(timeId_1);
+                    box.style.left = 1500 + 'px';
+                    alert('到达目的地');
+                } else {
+                    box.style.left = box.offsetLeft + 5 + 'px';
+                }
+            }, 100);
+        };
+        boxBack.onclick = function () {
+            let box = document.getElementById("box");
+            clearInterval(timeId_1);
+            timeId_2 = setInterval(function () {
+                if (box.offsetLeft <= 0) {
+                    clearInterval(timeId_2);
+                    box.style.left = "0";
+                    alert('已在出发位置');
+                } else {
+                    box.style.left = box.offsetLeft - 5 + 'px';
+                }
+            }, 100);
+        };
+    </script>
+</body>
+
+</html>
